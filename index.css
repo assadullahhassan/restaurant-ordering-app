@@ -1,0 +1,117 @@
+body,html {
+    margin: 0;
+    padding: 0;
+    font-family: "Smythe", system-ui;
+    
+} 
+
+main, header{
+    width: 450px;
+    margin: 0 auto;
+    
+}
+
+header img {
+    width: 100%;    
+}
+
+.container {
+display: flex;
+justify-content: space-between;
+align-items: center;
+border-bottom: 2px solid whitesmoke;
+padding: 20px;
+}
+
+.container-order {
+display: flex;
+justify-content: space-between;
+align-items: center;
+/* padding: 20px 0; */
+}
+
+.order-info {
+    border-bottom: 2px solid black;
+    padding: 0 10px;
+}
+
+.left-section {
+display: flex;
+/* padding: 20px; */
+align-items: center;
+}
+
+.left-section img {
+    width: 50px;
+    margin-right: 10px;
+}
+
+.food-info .description {
+    font-size: 0.9rem;
+    color: gray;
+  margin: 5px;
+}
+
+.food-info h3 {
+    margin: 5px;
+    font-size: 1.2rem;
+}
+
+.price {
+    font-weight: bold;
+    margin: 5px;
+}
+
+.title {
+    text-align: center;
+}
+
+.price-remove {
+    display: flex;
+    align-items: center;
+}
+
+.total-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.prices {
+    text-align: center;
+    padding-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.order-btn {
+    background-color: #16DB99;
+    border: none;
+    color: white;
+    padding: 20px;
+    width: 450px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.order-btn-discount {
+    background-color: #6D28D9;
+    border: none;
+    color: white;
+    padding: 10px;
+    width: 200px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+i {
+    cursor: pointer;
+}
+
+.add-to-order-btn {
+    cursor: pointer;
+}
+
+.total-price .label {
+    font-size: 22px;
+}

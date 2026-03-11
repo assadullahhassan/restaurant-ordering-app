@@ -1,0 +1,101 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link href="https://fonts.googleapis.com/css2?family=Smythe&display=swap" rel="stylesheet">
+       <link rel="stylesheet" href="index.css">
+    </head>
+    <body>
+        <header>
+            <img src="assets/header.png" alt="restaurant logo">
+        </header>
+        <main>
+            <section>
+                <div class="container">
+                    <div class="left-section">
+                        <img src="assets/pizza.png" alt="pizza">
+                        <div class="food-info">
+                            <h3>Pizza</h3>
+                            <p class="description">pepperoni,mushroom,mozarella</p>
+                            <p class="price">$14.99</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-minus"></i>
+                    <span>0</span>
+                    <i class="fa-solid fa-plus"></i>
+                    <img src="assets/add-btn.png" class="add-to-order-btn" alt="add to order">
+                </div>
+            </section>
+            <section>
+                <div class="container">
+                    <div class="left-section">
+                        <img src="assets/hamburger.png" alt="hamburger">
+                        <div class="food-info">
+                            <h3>Hamburger</h3>
+                            <p class="description">beef, cheese, lettuce</p>
+                            <p class="price">$12</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-minus"></i>
+                    <span>0</span>
+                    <i class="fa-solid fa-plus"></i>
+                    <img src="assets/add-btn.png" alt="add to order">
+                </div>
+            </section>
+            <section>
+                <div class="container">
+                    <div class="left-section">
+                        <img src="assets/beer.png" alt="beer">
+                        <div class="food-info">
+                            <h3>Beer</h3>
+                            <p class="description">grain, hops, yeast, water</p>
+                            <p class="price">$13</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-minus"></i>
+                    <span>0</span>
+                    <i class="fa-solid fa-plus"></i>
+                    <img src="assets/add-btn.png" alt="add to order">
+                </div>
+            </section>
+            <section class="order-info">
+            <h3 class="title">Your order</h3>
+                <div class="container-order">
+                 <div class="left-section">
+                    <!-- <img src="assets/beer.png" alt="beer"> -->
+                    <div class="food-info">
+                            <h3>Beer</h3>
+                            <p class="description">3 qty</p>
+                    </div>
+                  </div>
+                  <div class="price-remove">
+                    <p class="price">$13</p>
+                    <i class="fa-regular fa-circle-xmark"></i>
+                  </div>
+                  
+                </div>
+                <div class="container-order">
+                 <div class="left-section">
+                    <!-- <img src="assets/beer.png" alt="beer"> -->
+                    <div class="food-info">
+                            <h3>Hamburger</h3>
+                            <p class="description">2 qty</p>
+                    </div>
+                  </div>
+                  <div class="price-remove">
+                    <p class="price">$206</p>
+                    <i class="fa-regular fa-circle-xmark"></i>
+                  </div>
+                </div>
+            </section>
+            <section class="prices">
+                <div class="total-price">
+                    <p class="label">Total price:</p>
+                    <p class="price">$300</p>
+                </div>
+                <button class="order-btn-discount">Apply discount</button>
+                <button class="order-btn">Complete order</button>
+            </section>
+        </main>
+	<script src="index.js" type="module"></script>
+    </body>
+</html>
