@@ -7,6 +7,31 @@ const closeDiscountModalBtn = document.getElementById("close-discount-modal");
 const cardDetails = document.getElementById("card-details")
 const cardModal = document.getElementById("card-modal");
 
+let orderArray = []
+
+document.addEventListener("click", function(e) {
+    if (e.target.dataset.increase) {
+        handleIncrease(e.target.dataset.increase)
+    }
+    else if (e.target.dataset.decrease) {
+        handleDecrease(e.target.dataset.decrease)
+    }
+    else if (e.target.dataset.orderbtn) {
+        handleOrder(e.target.dataset.orderbtn)
+    } else if (e.target.id === "order-btn") {
+        const modal = document.getElementById("card-modal");
+        modal.style.display = "block";
+    } else if (e.target.id === "discount-btn") {
+        const modal = document.getElementById("discount-modal");
+        modal.style.display = "block";
+    } else if (e.target.dataset.removeorder) {
+        const orderId = e.target.dataset.removeorder
+        handleRemoveOrder(orderId)
+    }
+
+})
+
+
 closeModalBtn.addEventListener("click", function() {
     const cardModal = document.getElementById("card-modal");
     cardModal.style.display = "none";
@@ -17,15 +42,6 @@ closeDiscountModalBtn.addEventListener("click", function() {
     discountModal.style.display = "none";
 });
 
-orderBtn.addEventListener("click", function() {
-    const modal = document.getElementById("card-modal");
-    modal.style.display = "block";
-});
-
-discountBtn.addEventListener("click", function() {
-    const modal = document.getElementById("discount-modal");
-    modal.style.display = "block";
-});
 
 cardDetails.addEventListener('submit', function(e){
     console.log(e)
@@ -45,3 +61,129 @@ cardDetails.addEventListener('submit', function(e){
                 </div>`
     console.log(cardName, cardNumber, expirationDate, cvv)
 })
+
+function handleIncrease(id) {
+    console.log("increase", id)
+    const menuItem = menuArray.find(item => item.id == id)
+    if (menuItem) {
+        menuItem.qty++
+        renderMenu()
+    }
+
+}
+
+function handleDecrease(id) {
+    console.log("decrease", id)
+    const menuItem = menuArray.find(item => item.id == id)
+    if (menuItem) {
+        menuItem.qty--
+        if (menuItem.qty < 0) {
+            menuItem.qty = 0
+        }
+        renderMenu()
+    }
+}
+
+function handleOrder(id) {
+    console.log("order", id)
+    let orderId = 0
+        const menuItem = menuArray.find(item => item.id == id)
+        if (menuItem) {
+            const orderItem = {
+                id: orderId++,
+                name: menuItem.name,
+                price: menuItem.price * menuItem.qty,
+                qty: menuItem.qty
+            }
+            orderArray.push(orderItem)
+            initializeOrder()
+            renderTotalPrices()
+        }
+}
+
+function handleRemoveOrder(id) {
+
+    const orderItemIndex = orderArray.findIndex(item => item.id == id)
+    if (orderItemIndex !== -1) {
+        orderArray.splice(orderItemIndex, 1)
+        initializeOrder()
+        renderTotalPrices()
+    }
+}
+
+
+function renderMenu() {
+    let menuHtml = ""
+    menuArray.forEach(function(menuItem) {
+        menuHtml += `
+            <div class="menu-item">
+                        <div class="left-section">
+                        <img src="${menuItem.img}" alt="${menuItem.alt}">
+                        <div class="food-info">
+                            <h3>${menuItem.name}</h3>
+                            <p class="description">${menuItem.ingredients.join(", ")}</p>
+                            <p class="price">$${menuItem.price.toFixed(2)}</p>
+                        </div>
+                    </div>
+                    
+                    <i class="fa-solid fa-minus" data-decrease="${menuItem.id}"></i>
+                    <span id="qty-${menuItem.id}">${menuItem.qty}</span>
+                    <i class="fa-solid fa-plus" data-increase="${menuItem.id}"></i>
+                    <img src="assets/add-btn.png" data-orderbtn="${menuItem.id}" class="add-to-order-btn" alt="add to order">
+             </div> 
+        `
+    })
+    document.getElementById("menu").innerHTML = menuHtml
+}
+
+function initializeOrder() {
+    let orderData = ""
+    orderArray.forEach(function(orderItem) {
+        orderData += `
+            <div class="container-order">
+                    <div class="left-section">
+                    <div class="food-info">
+                         <h3>${orderItem.name}</h3>
+                        <p class="description">${orderItem.qty} qty</p>
+                    </div>
+                  </div>
+                  <div class="price-remove">
+                    <p class="price">$${orderItem.price}</p>
+                    <i class="fa-regular fa-circle-xmark" data-removeorder="${orderItem.id}"></i>
+                  </div>
+                 </div>
+                 `
+    })
+    renderOrder(orderData)
+}
+
+function renderOrder(orderData) {
+    let orderHtml = ''
+    orderHtml = 
+    `
+    <h3 class="title">Your order</h3>
+    ${orderData}
+    
+    `
+    document.getElementById("order").innerHTML = orderHtml
+}
+
+function renderTotalPrices() {
+    let totalPrice = 0
+    let pricesHtml = ""
+    orderArray.forEach(function(orderItem) {
+        totalPrice += orderItem.price
+    })
+    pricesHtml = `
+        <div class="total-price">
+                    <p class="label">Total price:</p>
+                    <p class="price">$${totalPrice.toFixed(2)}</p>
+                </div>
+        <button class="order-btn-discount" id="discount-btn">Apply discount</button>
+        <button class="order-btn" id="order-btn">Complete order</button>
+    `
+    document.getElementById("prices").innerHTML = pricesHtml
+}
+
+
+renderMenu()
