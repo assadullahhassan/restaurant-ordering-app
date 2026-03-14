@@ -1,13 +1,15 @@
-import menuArray from "./data.js";
+import {menuArray, couponsArray} from "./data.js";
 
 const closeModalBtn = document.getElementById("close-modal");
 const orderBtn = document.getElementById("order-btn");
 const discountBtn = document.getElementById("discount-btn");
 const closeDiscountModalBtn = document.getElementById("close-discount-modal");
-const cardDetails = document.getElementById("card-details")
+const cardDetails = document.getElementById("card-details");
+const discountForm = document.getElementById("discount-form")
 const cardModal = document.getElementById("card-modal");
 
 let orderArray = []
+let newTotalPrice = 0
 
 document.addEventListener("click", function(e) {
     if (e.target.dataset.increase) {
@@ -61,6 +63,52 @@ cardDetails.addEventListener('submit', function(e){
                 </div>`
     console.log(cardName, cardNumber, expirationDate, cvv)
 })
+
+discountForm.addEventListener("submit", function(e) {
+    e.preventDefault()
+    const formDatas = new FormData(discountForm)
+    const discountCode = formDatas.get("discountCode")
+
+    const coupon = couponsArray.find(item => item.code === discountCode.toUpperCase())
+    if (coupon) {
+        // Apply discount logic here
+        console.log("Discount applied:", coupon.discount)
+        applyDiscount(coupon)
+        const modal = document.getElementById("discount-modal");
+        modal.style.display = "none";
+    } else {
+        document.getElementById("discount-message").textContent = "Invalid discount code"
+        setTimeout(() => {
+            document.getElementById("discount-message").textContent = ""
+        }, 1000);
+    }
+})
+
+function applyDiscount(coupon) {
+    let price = 0
+    let newpricesHtml = ""
+    orderArray.forEach(function(orderItem) {
+       price += orderItem.price * (1 - coupon.discount)
+       console.log("price after discount:", price)
+    })
+    newpricesHtml = `
+        <div class="total-price">
+                    <p class="label">Subtotal:</p>
+                    <p class="price">$${newTotalPrice.toFixed(2)}</p>
+        </div>
+        <div class="total-price">
+            <p class="label">Discount(${coupon.code}):</p>
+            <p class="price">-$${(newTotalPrice * coupon.discount).toFixed(2)}</p>
+        </div>
+        <div class="total-price">
+             <p class="label">Total:</p>
+             <p class="price">$${(price).toFixed(2)}</p>
+        </div>
+        <button class="order-btn" id="order-btn">Complete order</button>
+    `
+    document.getElementById("prices").innerHTML = newpricesHtml
+}
+
 
 function handleIncrease(id) {
     console.log("increase", id)
@@ -174,6 +222,7 @@ function renderTotalPrices() {
     orderArray.forEach(function(orderItem) {
         totalPrice += orderItem.price
     })
+    newTotalPrice= totalPrice
     pricesHtml = `
         <div class="total-price">
                     <p class="label">Total price:</p>
