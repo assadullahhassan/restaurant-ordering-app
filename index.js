@@ -92,21 +92,46 @@ function applyDiscount(coupon) {
        console.log("price after discount:", price)
     })
     newpricesHtml = `
-        <div class="total-price">
-                    <p class="label">Subtotal:</p>
-                    <p class="price">$${newTotalPrice.toFixed(2)}</p>
-        </div>
-        <div class="total-price">
-            <p class="label">Discount(${coupon.code}):</p>
-            <p class="price">-$${(newTotalPrice * coupon.discount).toFixed(2)}</p>
-        </div>
-        <div class="total-price">
-             <p class="label">Total:</p>
-             <p class="price">$${(price).toFixed(2)}</p>
-        </div>
-        <button class="order-btn" id="order-btn">Complete order</button>
+
+
+        <div class="container-order">
+          <div class="left-section">
+            <div class="food-info">
+                   <h3>Subtotal :</h3>
+               </div>
+            </div>
+             <div class="price-remove">
+                <p class="price">$${newTotalPrice.toFixed(2)}</p>
+           </div>
+    </div>
+    <div class="container-order">
+          <div class="left-section">
+            <div class="food-info">
+                   <h3>Discount (${coupon.code}) :</h3>
+               </div>
+            </div>
+             <div class="price-remove">
+                <p class="price">$${(newTotalPrice * coupon.discount).toFixed(2)}</p>
+           </div>
+    </div>
+    <div class="container-order">
+          <div class="left-section">
+            <div class="food-info">
+                   <h3>Total :</h3>
+               </div>
+            </div>
+             <div class="price-remove">
+                <p class="price">$${(price).toFixed(2)}</p>
+           </div>
+    </div>
+    <button class="order-btn" id="order-btn">Complete order</button>
     `
     document.getElementById("prices").innerHTML = newpricesHtml
+    document.getElementById("toast-success").textContent = `Discount applied!`
+    document.getElementById("toast-success").style.display = "block"
+      setTimeout(() => {
+          document.getElementById("toast-success").style.display = "none"
+     }, 1000);
 }
 
 
@@ -143,19 +168,38 @@ function handleOrder(id) {
                 price: menuItem.price * menuItem.qty,
                 qty: menuItem.qty
             }
-            orderArray.push(orderItem)
+
+            if (orderArray.find(item => item.name === menuItem.name)) {
+                document.getElementById("toast-danger").textContent = `${menuItem.name} already exist in your order`
+                document.getElementById("toast-danger").style.display = "block"
+                setTimeout(() => {
+                    document.getElementById("toast-danger").style.display = "none"
+                }, 1500);
+            } else {
+                document.getElementById("toast-success").textContent = `${menuItem.name} has been added to your order`
+                document.getElementById("toast-success").style.display = "block"
+                setTimeout(() => {
+                    document.getElementById("toast-success").style.display = "none"
+                }, 1000);
+             orderArray.push(orderItem)
             initializeOrder()
             renderTotalPrices()
+            }       
         }
 }
 
 function handleRemoveOrder(id) {
 
     const orderItemIndex = orderArray.findIndex(item => item.id == id)
+    console.log("remove order", id, orderItemIndex)
     if (orderItemIndex !== -1) {
         orderArray.splice(orderItemIndex, 1)
         initializeOrder()
-        renderTotalPrices()
+            if (orderArray.length !== 0) {
+               renderTotalPrices()
+            } else {
+                document.getElementById("prices").innerHTML = ""
+            }  
     }
 }
 
