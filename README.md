@@ -17,6 +17,8 @@ This is a responsive, functional Food Ordering Web Application built using a "Mo
 * **Discount System**: Integrated modal for entering discount codes (e.g., DISCOUNT10 for 10% off) with instant price recalculation.
 * **Interactive Modals**: Custom-built modals for both the discount entry and the secure payment credit card form.
 * **Form Validation**: Built-in HTML5 validation for the payment processing form to ensure all required details are captured.
+* **Toast message**: Display a toast message when a user add an item to a cart and when he/she add an existing item or apply a discount.
+
 
 ## 🛠 Tech Stack
 * **HTML5**: Semantic structure for the menu and form validation.
