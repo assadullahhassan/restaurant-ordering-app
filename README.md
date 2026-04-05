@@ -41,4 +41,3 @@ This is a responsive, functional Food Ordering Web Application built using a "Mo
       - LinkedIn: [Assadullah Hassan](https://www.linkedin.com/in/assadullahhassan)
 
 Made from Scrimba by [Assadullah Hassan](https://scrimba.com/?via=u4f4512)
-
